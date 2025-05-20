@@ -1,7 +1,7 @@
 # SICCOD System Documentation
 
 ## Overview
-SICCOD (Sistema de Códigos) is a comprehensive business application for managing relationships between different entities in a banking/financial context, specifically for managing point-of-sale terminals and their relationships with business locations and contacts.
+SICCOD (Sistema Informático Corporativo de Codere) is a comprehensive business application for managing relationships between different entities in a banking/financial context, specifically for managing point-of-sale terminals and their relationships with business locations and contacts.
 
 ## Table of Contents
 1. [System Architecture](./docs/architecture.md)
