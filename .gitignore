@@ -1,0 +1,5 @@
+# Ignore PowerBuilder source file
+Entrada_unica.txt
+
+# Ignore macOS system files
+.DS_Store 
