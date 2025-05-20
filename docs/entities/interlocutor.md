@@ -1,37 +1,82 @@
 # Interlocutor Management
 
 ## Overview
-The Interlocutor management system handles business contacts and their relationships within the SICCOD system.
+The Interlocutor Management module handles the creation, maintenance, and lifecycle of business interlocutors, including their relationships with locations and access rights.
 
 ## Process Flow
 ```mermaid
-graph TB
-    subgraph Interlocutor Management Process
-        Start[Start Process] --> InitForm[Initialize Form]
-        InitForm --> LoadData[Load Initial Data]
-        
-        subgraph Data Validation
-            LoadData --> ValidateBasic[Validate Basic Info]
-            ValidateBasic --> ValidateID[Validate ID/DNI]
-            ValidateID --> ValidateAddress[Validate Address]
-            ValidateAddress --> ValidateContact[Validate Contact Info]
-        end
-        
-        subgraph Business Rules
-            ValidateContact --> CheckLegalType[Check Legal Entity Type]
-            CheckLegalType --> ValidateSAP[Validate SAP Integration]
-            ValidateSAP --> CheckZones[Check Zone Assignment]
-        end
-        
-        subgraph Data Processing
-            CheckZones --> ProcessCRM[Process CRM Data]
-            ProcessCRM --> ProcessSAP[Process SAP Data]
-            ProcessSAP --> SaveData[Save Local Data]
-        end
-        
-        SaveData --> End[End Process]
-    end
+graph TD
+    A[Start] --> B{Action Type}
+    B -->|New| C[Create Interlocutor]
+    B -->|Existing| D[Search Interlocutor]
+    C --> E[Validate Data]
+    D --> F[View Interlocutor Details]
+    E --> G[Assign Role]
+    F --> H{Action}
+    G --> I[Set Permissions]
+    H -->|Update| J[Modify Interlocutor]
+    H -->|Access| K[Update Access]
+    H -->|Deactivate| L[Archive Interlocutor]
+    I --> M[End]
+    J --> M
+    K --> M
+    L --> M
 ```
+
+## Entity Diagram
+```mermaid
+erDiagram
+    INTERLOCUTOR ||--o{ LOCATION_INTERLOCUTOR : "assigned_to"
+    INTERLOCUTOR ||--o{ INTERLOCUTOR_ROLE : "has"
+    INTERLOCUTOR {
+        long interlocutor_id PK
+        string name
+        string type
+        string status
+        datetime created_date
+        string created_by
+        boolean active
+    }
+    INTERLOCUTOR_ROLE {
+        long role_id PK
+        long interlocutor_id FK
+        string role_name
+        string permissions
+        datetime assigned_date
+        boolean active
+    }
+```
+
+## Business Rules
+1. Each interlocutor must have a unique identifier
+2. Interlocutor type must be predefined
+3. Role assignments must be tracked
+4. Status changes must be logged
+
+## Technical Implementation
+### Data Access Layer
+- Jaguar server components for interlocutor operations
+- Stored procedures for CRUD operations
+- Role management system
+- Access control system
+
+### User Interface
+- Interlocutor search and filtering
+- Interlocutor details view
+- Role assignment interface
+- Access management interface
+
+## Integration Points
+- Location Management System
+- Role Management System
+- Access Control System
+- Audit System
+
+## Security Considerations
+- Role-based access control
+- Permission validation
+- Audit logging
+- Data encryption
 
 ## Data Structure
 

@@ -1,7 +1,87 @@
 # Jaguar Server Integration
 
 ## Overview
-The Jaguar server integration provides distributed component management, security, and transaction handling for the SICCOD system.
+The Jaguar Server Integration module manages the communication and data synchronization between the application and the Jaguar server infrastructure.
+
+## Process Flow
+```mermaid
+graph TD
+    A[Start] --> B{Operation Type}
+    B -->|Data Sync| C[Check Connection]
+    B -->|Query| D[Validate Request]
+    C --> E[Get Server Status]
+    D --> F[Prepare Query]
+    E --> G{Status}
+    F --> H[Execute Query]
+    G -->|Online| I[Sync Data]
+    G -->|Offline| J[Queue Operation]
+    H --> K[Process Response]
+    I --> L[Update Local DB]
+    J --> M[Store in Queue]
+    K --> N[End]
+    L --> N
+    M --> N
+```
+
+## Entity Diagram
+```mermaid
+erDiagram
+    JAGUAR_SERVER ||--o{ SYNC_OPERATION : "performs"
+    SYNC_OPERATION ||--o{ SYNC_LOG : "generates"
+    JAGUAR_SERVER {
+        long server_id PK
+        string hostname
+        string status
+        datetime last_sync
+        string version
+    }
+    SYNC_OPERATION {
+        long operation_id PK
+        long server_id FK
+        string operation_type
+        datetime execution_time
+        string status
+        string details
+    }
+    SYNC_LOG {
+        long log_id PK
+        long operation_id FK
+        datetime timestamp
+        string message
+        string severity
+    }
+```
+
+## Business Rules
+1. Server connection must be validated before operations
+2. Failed operations must be queued for retry
+3. Sync operations must be logged
+4. Server status must be monitored
+
+## Technical Implementation
+### Data Access Layer
+- Jaguar server connection management
+- Stored procedures for data operations
+- Queue management system
+- Logging system
+
+### User Interface
+- Server status monitoring
+- Sync operation management
+- Log viewer
+- Queue management interface
+
+## Integration Points
+- Database Management System
+- Queue Management System
+- Logging System
+- Monitoring System
+
+## Security Considerations
+- Secure server communication
+- Operation authentication
+- Data encryption
+- Access control
 
 ## Integration Diagram
 ```mermaid
@@ -120,53 +200,3 @@ end function
   - `n_cst_so_permventana`
 - Query Mode
   - `n_cst_querymode`
-
-### 3. Application Package (CNT_Package_Appl)
-- Business Objects
-  - `n_cst_bo_estructuragestion`
-- Management Objects
-  - `neg_interlocutor`
-  - `neg_parametros`
-- Utility Objects
-  - Various utility components
-
-## Error Handling
-
-### Connection Errors
-```powerbuilder
-Choose Case li_ret
-    Case 50
-        ls_String = "50-Distributed service error"
-    Case 52
-        ls_String = "52-Distributed communications error"
-    Case 53
-        ls_String = "53-Requested server not active"
-    // ... more error cases
-End Choose
-```
-
-### Transaction Management
-```powerbuilder
-try
-    RemoteObject.of_SetComplete()  // Commit transaction
-catch ( corbasystemexception e )
-    RemoteObject.of_SetAbort()     // Rollback transaction
-end try
-```
-
-## Security Integration
-```powerbuilder
-// Security component initialization
-App.inv_Connect.of_CreateInstanceSistema(lnv_so_seguridad, "n_cst_so_sistemaseguridad")
-// Security checks
-App.inv_Connect.of_CreateInstanceSistema(luo_so_permventana, "n_cst_so_permventana")
-```
-
-## Best Practices
-1. Always check connection status before operations
-2. Properly handle instance creation and destruction
-3. Implement comprehensive error handling
-4. Use transaction management for data consistency
-5. Follow security guidelines for component access
-6. Maintain proper logging for troubleshooting
-7. Implement proper cleanup in error scenarios 
