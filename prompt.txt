@@ -1,0 +1,6 @@
+1.- Hola, desde tu conocimiento de power builder como lenguaje de programación de propósito general y utilizando el fichero del directorio de proyecto 'Entrada_unica.txt', podrías intentar extraer el pseudocódigo de esta aplicación y toda la documentación fucnional resumida de que seas capaz?
+2.- could you please provide details about point 3.A entity management? what kind of information is it managing?
+3.- could you please create a mermaid diagram showing components dependencies on one side and, in the other hand, something similar to perform business processes flows?
+4.- great, could you please deep dive into 'interlocutor management' process in order to better explain its steps discovering data validated and commited and all the business logic inside?
+5.- And least but not last, could you please explode 'Jaguar server' box in previous mermaid to deep dive inside and do the same analisis like you did with 'Interlocutor Management'?
+6.- Great, now could you please create a pretty good markdown browsable set to put inside the informacion extracted from the chat beggining? You can leave it inside current working directory
