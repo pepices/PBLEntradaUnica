@@ -3,6 +3,26 @@
 ## Overview
 The Machine Management module handles the lifecycle of point-of-sale terminals, from installation to maintenance and decommissioning.
 
+## Process Flow
+```mermaid
+graph TD
+    A[Start] --> B{Machine Status}
+    B -->|New| C[Register Machine]
+    B -->|Existing| D[Search Machine]
+    C --> E[Validate Serial Number]
+    D --> F[View Machine Details]
+    E --> G[Assign Location]
+    F --> H{Action}
+    G --> I[Install Machine]
+    H -->|Update| J[Modify Machine]
+    H -->|Maintenance| K[Schedule Maintenance]
+    H -->|Decommission| L[Remove Machine]
+    I --> M[End]
+    J --> M
+    K --> M
+    L --> M
+```
+
 ## Entity Diagram
 ```mermaid
 erDiagram

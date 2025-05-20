@@ -3,6 +3,26 @@
 ## Overview
 The Location Management module handles all aspects of physical business locations, including their relationships with machines, interlocutors, and other business entities.
 
+## Process Flow
+```mermaid
+graph TD
+    A[Start] --> B{Location Type}
+    B -->|New Location| C[Create Location]
+    B -->|Existing Location| D[Search Location]
+    C --> E[Validate Address]
+    D --> F[View Location Details]
+    E --> G[Assign Machines]
+    F --> H{Action}
+    G --> I[Assign Interlocutors]
+    H -->|Update| J[Modify Location]
+    H -->|Delete| K[Deactivate Location]
+    H -->|View| L[View Relationships]
+    I --> M[End]
+    J --> M
+    K --> M
+    L --> M
+```
+
 ## Entity Diagram
 ```mermaid
 erDiagram

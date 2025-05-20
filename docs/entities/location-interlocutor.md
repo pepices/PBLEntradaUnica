@@ -1,51 +1,69 @@
 # Location-Interlocutor Management
 
 ## Overview
-The Location-Interlocutor Management module handles the relationships between business locations and their associated interlocutors, managing different types of relationships and their lifecycle.
+The Location-Interlocutor Management module handles the relationships between locations and their associated interlocutors, managing access and responsibilities.
+
+## Process Flow
+```mermaid
+graph TD
+    A[Start] --> B{Action Type}
+    B -->|New| C[Create Association]
+    B -->|Existing| D[Search Association]
+    C --> E[Select Location]
+    D --> F[View Association Details]
+    E --> G[Select Interlocutor]
+    F --> H{Action}
+    G --> I[Set Access Level]
+    H -->|Update| J[Modify Association]
+    H -->|Access| K[Update Access]
+    H -->|Remove| L[Delete Association]
+    I --> M[End]
+    J --> M
+    K --> M
+    L --> M
+```
 
 ## Entity Diagram
 ```mermaid
 erDiagram
     LOCATION ||--o{ LOCATION_INTERLOCUTOR : "has"
-    INTERLOCUTOR ||--o{ LOCATION_INTERLOCUTOR : "has"
+    INTERLOCUTOR ||--o{ LOCATION_INTERLOCUTOR : "assigned_to"
     LOCATION_INTERLOCUTOR {
-        long relationship_id PK
         long location_id FK
         long interlocutor_id FK
-        string relationship_type
-        datetime start_date
-        datetime end_date
-        string status
-        string notes
+        string access_level
+        datetime assignment_date
+        string responsibilities
+        boolean active
     }
 ```
 
 ## Business Rules
-1. Each relationship must have a valid start date
-2. Relationship types must be predefined
-3. Multiple relationships can exist between location and interlocutor
-4. Relationship status must be one of: Active, Inactive, Pending, Terminated
+1. Each location can have multiple interlocutors
+2. Access levels must be predefined
+3. Assignment dates must be tracked
+4. Responsibilities must be documented
 
 ## Technical Implementation
 ### Data Access Layer
-- Jaguar server components for relationship management
+- Jaguar server components for association operations
 - Stored procedures for CRUD operations
-- Relationship validation rules
+- Access control management
 
 ### User Interface
-- Relationship search and filtering
-- Relationship details view
-- Relationship type management
-- Timeline view of relationships
+- Association management interface
+- Access level configuration
+- Responsibility assignment
+- Assignment history view
 
 ## Integration Points
 - Location Management System
 - Interlocutor Management System
-- Contract Management System
-- Document Management System
+- Access Control System
+- Audit System
 
 ## Security Considerations
-- Relationship data access control
-- Historical relationship tracking
-- Audit trail for relationship changes
-- Role-based access to relationship management 
+- Access level validation
+- Assignment authorization
+- Responsibility tracking
+- Audit logging 
