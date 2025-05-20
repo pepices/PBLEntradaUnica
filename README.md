@@ -6,12 +6,12 @@ SICCOD (Sistema Informático Corporativo de Codere) is a comprehensive business 
 ## Table of Contents
 1. [System Architecture](./docs/architecture.md)
 2. [Entity Management](./docs/entity-management.md)
-   - [**Interlocutor Management**](./docs/entities/interlocutor.md)
+   - [Interlocutor Management](./docs/entities/interlocutor.md)
    - [Location Management](./docs/entities/location.md)
    - [Machine Management](./docs/entities/machine.md)
    - [Model Management](./docs/entities/model.md)
    - [Location-Interlocutor Management](./docs/entities/location-interlocutor.md)
-3. [**Jaguar Server Integration**](./docs/jaguar-integration.md)
+3. [Jaguar Server Integration](./docs/jaguar-integration.md)
 4. [Technical Implementation](./docs/technical-implementation.md)
 5. [Security and Access Control](./docs/security.md)
 
