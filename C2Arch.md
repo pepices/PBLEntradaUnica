@@ -1,0 +1,78 @@
+[Volver a la documentación C4](readC4.md)
+
+graph TD
+    %% --- Actores (definidos en C1, relevantes aquí para mostrar conexiones) ---
+    UsuarioWebExt[("Cliente Web<br/>(Usuario)")]
+    UsuarioMovilExt[("Cliente Móvil<br/>(Usuario)")]
+    AdminExt[("Admin del Sistema<br/>(Usuario)")]
+
+    %% --- Sistemas Externos (definidos en C1) ---
+    SistemaPagosExt[("Sistema de Pagos<br/>(Externo)")]
+    SistemaEnviosExt[("Sistema de Envíos<br/>(Externo)")]
+    ProveedorIdentidadExt[("Proveedor de Identidad<br/>(Externo)")]
+
+    subgraph SistemaOnline [Sistema de Gestión de Pedidos Online]
+        direction LR
+
+        %% --- Contenedores de Frontend ---
+        subgraph FrontendApps [Aplicaciones Cliente]
+            direction TB
+            WebApp[<center><b>Aplicación Web</b><br/>(React)<br/><i>[Contenedor: SPA]</i></center>]
+            MobileApp[<center><b>Aplicación Móvil</b><br/>(Kotlin/Android)<br/><i>[Contenedor: App Nativa]</i></center>]
+        end
+
+        %% --- Contenedor API Gateway ---
+        APIGateway[<center><b>API Gateway</b><br/>(Node.js + Express)<br/><i>[Contenedor: Aplicación Web]</i></center>]
+
+        %% --- Contenedores de Backend (Microservicios) ---
+        subgraph BackendServices [Microservicios]
+            direction TB
+            OrderService[<center><b>Servicio de Pedidos</b><br/>(Java Spring Boot)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
+            ProductService[<center><b>Servicio de Productos</b><br/>(Python Flask)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
+            InventoryService[<center><b>Servicio de Inventario</b><br/>(Go)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
+            NotificationService[<center><b>Servicio de Notificaciones</b><br/>(Node.js)<br/><i>[Contenedor: Aplicación]</i></center>]
+        end
+
+        %% --- Contenedores de Almacenamiento de Datos ---
+        subgraph DataStores [Almacenamiento de Datos]
+            direction TB
+            OrderDB[<center><b>BD Pedidos</b><br/>(SQL Server)<br/><i>[Contenedor: Base de Datos]</i></center>]
+            ProductDB[<center><b>BD Productos</b><br/>(PostgreSQL)<br/><i>[Contenedor: Base de Datos]</i></center>]
+            InventoryDB[<center><b>BD Inventario</b><br/>(MongoDB)<br/><i>[Contenedor: Base de Datos]</i></center>]
+            MessageQueue[<center><b>Cola de Mensajes</b><br/>(RabbitMQ / Kafka)<br/><i>[Contenedor: Sistema de Mensajería]</i></center>]
+        end
+    end
+
+    %% --- Interacciones ---
+    UsuarioWebExt -- "HTTPS" --> WebApp
+    UsuarioMovilExt -- "HTTPS" --> MobileApp
+    AdminExt -- "HTTPS" --> WebApp %% Admin podría usar la misma app web con diferentes roles
+
+    WebApp -- "HTTPS/JSON (API Externa)" --> APIGateway
+    MobileApp -- "HTTPS/JSON (API Externa)" --> APIGateway
+
+    APIGateway -- "Autenticación (OAuth2/OIDC)" --> ProveedorIdentidadExt
+    APIGateway -- "HTTP/gRPC (API Interna)" --> OrderService
+    APIGateway -- "HTTP/gRPC (API Interna)" --> ProductService
+    APIGateway -- "HTTP/gRPC (API Interna)" --> InventoryService
+
+    OrderService -- "JDBC" --> OrderDB
+    OrderService -- "HTTP/gRPC" --> ProductService
+    OrderService -- "HTTP/gRPC" --> InventoryService
+    OrderService -- "Procesar Pago (API Externa)" --> SistemaPagosExt
+    OrderService -- "Publica Evento (AMQP/Kafka)" --> MessageQueue
+
+    ProductService -- "JDBC" --> ProductDB
+    InventoryService -- "Driver NoSQL" --> InventoryDB
+    
+    NotificationService -- "Consume Evento (AMQP/Kafka)" --> MessageQueue
+    NotificationService -- "Solicita Envío (API Externa)" --> SistemaEnviosExt
+    %% Nota: NotificationService podría también enviar emails, SMS, etc. (no mostrado por simplicidad)
+
+    %% Estilos
+    classDef container fill:#e6ffe6,stroke:#4A4,stroke-width:2px,rx:5px
+    classDef datastore fill:#ffe6cc,stroke:#D35400,stroke-width:2px,rx:5px
+    classDef apigw fill:#fff0b3,stroke:#D35400,stroke-width:2px,rx:5px
+    class WebApp,MobileApp,OrderService,ProductService,InventoryService,NotificationService container
+    class APIGateway apigw
+    class OrderDB,ProductDB,InventoryDB,MessageQueue datastore
