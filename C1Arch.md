@@ -3,22 +3,22 @@
 ```mermaid
 graph TD
     %% --- Personas ---
-    ClienteWeb[<center><b>Cliente Web</b><br/>(Usuario)</center>]
-    ClienteMovil[<center><b>Cliente Móvil</b><br/>(Usuario)</center>]
-    Admin[<center><b>Administrador<br/>del Sistema</b><br/>(Usuario)</center>]
+    ClienteWeb["Cliente Web\n(Usuario)"]
+    ClienteMovil["Cliente Móvil\n(Usuario)"]
+    Admin["Administrador del Sistema\n(Usuario)"]
 
     %% --- Sistema de Software (El nuestro) ---
-    SistemaPedidos[<center><b>Sistema de Gestión<br/>de Pedidos Online</b><br/><i>[Sistema de Software]</i></center>]
+    SistemaPedidos["Sistema de Gestión de Pedidos Online\n[Sistema de Software]"]
 
     %% --- Sistemas Externos ---
-    SistemaPagos[<center><b>Sistema de Pagos</b><br/>(Ej: Stripe)<br/><i>[Sistema de Software Externo]</i></center>]
-    SistemaEnvios[<center><b>Sistema de Envíos</b><br/>(Ej: FedEx API)<br/><i>[Sistema de Software Externo]</i></center>]
-    ProveedorIdentidad[<center><b>Proveedor de Identidad</b><br/>(Ej: Auth0, EntraID)<br/><i>[Sistema de Software Externo]</i></center>]
+    SistemaPagos["Sistema de Pagos\n(Ej: Stripe)\n[Sistema de Software Externo]"]
+    SistemaEnvios["Sistema de Envíos\n(Ej: FedEx API)\n[Sistema de Software Externo]"]
+    ProveedorIdentidad["Proveedor de Identidad\n(Ej: Auth0, EntraID)\n[Sistema de Software Externo]"]
 
     %% --- Relaciones ---
-    ClienteWeb -- "Realiza Pedidos,<br/>Consulta Estado" --> SistemaPedidos
-    ClienteMovil -- "Realiza Pedidos,<br/>Consulta Estado" --> SistemaPedidos
-    Admin -- "Gestiona Productos,<br/>Revisa Pedidos,<br/>Configura Sistema" --> SistemaPedidos
+    ClienteWeb -- "Realiza Pedidos,\nConsulta Estado" --> SistemaPedidos
+    ClienteMovil -- "Realiza Pedidos,\nConsulta Estado" --> SistemaPedidos
+    Admin -- "Gestiona Productos,\nRevisa Pedidos,\nConfigura Sistema" --> SistemaPedidos
 
     SistemaPedidos -- "Procesa Pagos" --> SistemaPagos
     SistemaPedidos -- "Gestiona Envíos" --> SistemaEnvios

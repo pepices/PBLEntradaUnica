@@ -3,34 +3,34 @@
 ```mermaid
 graph TD
     %% --- Elementos Externos al Contenedor "Servicio de Pedidos" ---
-    APIGatewayExt[("API Gateway<br/>(Llama a este servicio)")]
-    ProductServiceExt[("Servicio de Productos<br/>(Externo a este contenedor)")]
-    InventoryServiceExt[("Servicio de Inventario<br/>(Externo a este contenedor)")]
-    OrderDBExt[("BD Pedidos (SQL Server)<br/>(Externo a este contenedor)")]
-    SistemaPagosExt2[("Sistema de Pagos<br/>(Externo)")]
-    MessageQueueExt[("Cola de Mensajes<br/>(Externo a este contenedor)")]
+    APIGatewayExt(("API Gateway\n(Llama a este servicio)"))
+    ProductServiceExt(("Servicio de Productos\n(Externo a este contenedor)"))
+    InventoryServiceExt(("Servicio de Inventario\n(Externo a este contenedor)"))
+    OrderDBExt(("BD Pedidos (SQL Server)\n(Externo a este contenedor)"))
+    SistemaPagosExt2(("Sistema de Pagos\n(Externo)"))
+    MessageQueueExt(("Cola de Mensajes\n(Externo a este contenedor)"))
 
-    subgraph OrderServiceContainer [Contenedor: Servicio de Pedidos (Java Spring Boot)]
+    subgraph OrderServiceContainer ["Contenedor: Servicio de Pedidos (Java Spring Boot)"]
         direction LR
 
         %% --- Componentes dentro del Servicio de Pedidos ---
-        OrderController[<center><b>OrderController</b><br/>(Spring MVC RestController)<br/><i>[Componente: API Endpoint Handler]</i><br/>Maneja peticiones HTTP/JSON<br/>para crear/consultar pedidos.</center>]
+        OrderController["OrderController\n(Spring MVC RestController)\n[Componente: API Endpoint Handler]\nManeja peticiones HTTP/JSON\npara crear/consultar pedidos."]
         
-        OrderFacade[<center><b>OrderFacade</b><br/>(Spring Service)<br/><i>[Componente: Fachada/Lógica de Orquestación]</i><br/>Orquesta la creación y gestión de pedidos,<br/>coordina con otros componentes y servicios.</center>]
+        OrderFacade["OrderFacade\n(Spring Service)\n[Componente: Fachada/Lógica de Orquestación]\nOrquesta la creación y gestión de pedidos,\ncoordina con otros componentes y servicios."]
 
-        OrderBusinessLogic[<center><b>OrderBusinessLogic</b><br/>(Spring Service/Component)<br/><i>[Componente: Lógica de Negocio Principal]</i><br/>Valida datos, calcula totales,<br/>aplica reglas de negocio del pedido.</center>]
+        OrderBusinessLogic["OrderBusinessLogic\n(Spring Service/Component)\n[Componente: Lógica de Negocio Principal]\nValida datos, calcula totales,\naplica reglas de negocio del pedido."]
         
-        ProductServiceClient[<center><b>ProductServiceClient</b><br/>(Spring Component con RestTemplate/Feign)<br/><i>[Componente: Cliente de Servicio Externo]</i><br/>Cliente para interactuar con<br/>el Servicio de Productos.</center>]
+        ProductServiceClient["ProductServiceClient\n(Spring Component con RestTemplate/Feign)\n[Componente: Cliente de Servicio Externo]\nCliente para interactuar con\nel Servicio de Productos."]
 
-        InventoryServiceClient[<center><b>InventoryServiceClient</b><br/>(Spring Component con RestTemplate/Feign)<br/><i>[Componente: Cliente de Servicio Externo]</i><br/>Cliente para interactuar con<br/>el Servicio de Inventario.</center>]
+        InventoryServiceClient["InventoryServiceClient\n(Spring Component con RestTemplate/Feign)\n[Componente: Cliente de Servicio Externo]\nCliente para interactuar con\nel Servicio de Inventario."]
 
-        PaymentGatewayClient[<center><b>PaymentGatewayClient</b><br/>(Spring Component)<br/><i>[Componente: Integración de Pagos]</i><br/>Interactúa con el Sistema de Pagos externo.</center>]
+        PaymentGatewayClient["PaymentGatewayClient\n(Spring Component)\n[Componente: Integración de Pagos]\nInteractúa con el Sistema de Pagos externo."]
         
-        OrderRepository[<center><b>OrderRepository</b><br/>(Spring Data JPA Repository)<br/><i>[Componente: Acceso a Datos]</i><br/>Persiste y recupera<br/>entidades de Pedido.</center>]
+        OrderRepository["OrderRepository\n(Spring Data JPA Repository)\n[Componente: Acceso a Datos]\nPersiste y recupera\nentidades de Pedido."]
         
-        DomainModel[<center><b>Modelo de Dominio</b><br/>(Clases POJO/Entidades JPA)<br/><i>[Componente: Clases de Datos]</i><br/>Ej: Order, OrderItem, Address</center>]
+        DomainModel["Modelo de Dominio\n(Clases POJO/Entidades JPA)\n[Componente: Clases de Datos]\nEj: Order, OrderItem, Address"]
 
-        OrderEventPublisher[<center><b>OrderEventPublisher</b><br/>(Spring Component con RabbitTemplate/KafkaTemplate)<br/><i>[Componente: Publicador de Eventos]</i><br/>Publica eventos de pedido (ej: PedidoCreado)</center>]
+        OrderEventPublisher["OrderEventPublisher\n(Spring Component con RabbitTemplate/KafkaTemplate)\n[Componente: Publicador de Eventos]\nPublica eventos de pedido (ej: PedidoCreado)"]
 
     end
 

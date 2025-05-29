@@ -3,51 +3,51 @@
 ```mermaid
 graph TD
     %% --- Actores (definidos en C1, relevantes aquí para mostrar conexiones) ---
-    UsuarioWebExt[("Cliente Web<br/>(Usuario)")]
-    UsuarioMovilExt[("Cliente Móvil<br/>(Usuario)")]
-    AdminExt[("Admin del Sistema<br/>(Usuario)")]
+    UsuarioWebExt(("Cliente Web\n(Usuario)"))
+    UsuarioMovilExt(("Cliente Móvil\n(Usuario)"))
+    AdminExt(("Admin del Sistema\n(Usuario)"))
 
     %% --- Sistemas Externos (definidos en C1) ---
-    SistemaPagosExt[("Sistema de Pagos<br/>(Externo)")]
-    SistemaEnviosExt[("Sistema de Envíos<br/>(Externo)")]
-    ProveedorIdentidadExt[("Proveedor de Identidad<br/>(Externo)")]
+    SistemaPagosExt(("Sistema de Pagos\n(Externo)"))
+    SistemaEnviosExt(("Sistema de Envíos\n(Externo)"))
+    ProveedorIdentidadExt(("Proveedor de Identidad\n(Externo)"))
 
-    subgraph SistemaOnline [Sistema de Gestión de Pedidos Online]
+    subgraph SistemaOnline ["Sistema de Gestión de Pedidos Online"]
         direction LR
 
         %% --- Contenedores de Frontend ---
-        subgraph FrontendApps [Aplicaciones Cliente]
+        subgraph FrontendApps ["Aplicaciones Cliente"]
             direction TB
-            WebApp[<center><b>Aplicación Web</b><br/>(React)<br/><i>[Contenedor: SPA]</i></center>]
-            MobileApp[<center><b>Aplicación Móvil</b><br/>(Kotlin/Android)<br/><i>[Contenedor: App Nativa]</i></center>]
+            WebApp["Aplicación Web\n(React)\n[Contenedor: SPA]"]
+            MobileApp["Aplicación Móvil\n(Kotlin/Android)\n[Contenedor: App Nativa]"]
         end
 
         %% --- Contenedor API Gateway ---
-        APIGateway[<center><b>API Gateway</b><br/>(Node.js + Express)<br/><i>[Contenedor: Aplicación Web]</i></center>]
+        APIGateway["API Gateway\n(Node.js + Express)\n[Contenedor: Aplicación Web]"]
 
         %% --- Contenedores de Backend (Microservicios) ---
-        subgraph BackendServices [Microservicios]
+        subgraph BackendServices ["Microservicios"]
             direction TB
-            OrderService[<center><b>Servicio de Pedidos</b><br/>(Java Spring Boot)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
-            ProductService[<center><b>Servicio de Productos</b><br/>(Python Flask)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
-            InventoryService[<center><b>Servicio de Inventario</b><br/>(Go)<br/><i>[Contenedor: Aplicación Web API]</i></center>]
-            NotificationService[<center><b>Servicio de Notificaciones</b><br/>(Node.js)<br/><i>[Contenedor: Aplicación]</i></center>]
+            OrderService["Servicio de Pedidos\n(Java Spring Boot)\n[Contenedor: Aplicación Web API]"]
+            ProductService["Servicio de Productos\n(Python Flask)\n[Contenedor: Aplicación Web API]"]
+            InventoryService["Servicio de Inventario\n(Go)\n[Contenedor: Aplicación Web API]"]
+            NotificationService["Servicio de Notificaciones\n(Node.js)\n[Contenedor: Aplicación]"]
         end
 
         %% --- Contenedores de Almacenamiento de Datos ---
-        subgraph DataStores [Almacenamiento de Datos]
+        subgraph DataStores ["Almacenamiento de Datos"]
             direction TB
-            OrderDB[<center><b>BD Pedidos</b><br/>(SQL Server)<br/><i>[Contenedor: Base de Datos]</i></center>]
-            ProductDB[<center><b>BD Productos</b><br/>(PostgreSQL)<br/><i>[Contenedor: Base de Datos]</i></center>]
-            InventoryDB[<center><b>BD Inventario</b><br/>(MongoDB)<br/><i>[Contenedor: Base de Datos]</i></center>]
-            MessageQueue[<center><b>Cola de Mensajes</b><br/>(RabbitMQ / Kafka)<br/><i>[Contenedor: Sistema de Mensajería]</i></center>]
+            OrderDB["BD Pedidos\n(SQL Server)\n[Contenedor: Base de Datos]"]
+            ProductDB["BD Productos\n(PostgreSQL)\n[Contenedor: Base de Datos]"]
+            InventoryDB["BD Inventario\n(MongoDB)\n[Contenedor: Base de Datos]"]
+            MessageQueue["Cola de Mensajes\n(RabbitMQ / Kafka)\n[Contenedor: Sistema de Mensajería]"]
         end
     end
 
     %% --- Interacciones ---
     UsuarioWebExt -- "HTTPS" --> WebApp
     UsuarioMovilExt -- "HTTPS" --> MobileApp
-    AdminExt -- "HTTPS" --> WebApp %% Admin podría usar la misma app web con diferentes roles
+    AdminExt -- "HTTPS" --> WebApp
 
     WebApp -- "HTTPS/JSON (API Externa)" --> APIGateway
     MobileApp -- "HTTPS/JSON (API Externa)" --> APIGateway
@@ -68,7 +68,6 @@ graph TD
     
     NotificationService -- "Consume Evento (AMQP/Kafka)" --> MessageQueue
     NotificationService -- "Solicita Envío (API Externa)" --> SistemaEnviosExt
-    %% Nota: NotificationService podría también enviar emails, SMS, etc. (no mostrado por simplicidad)
 
     %% Estilos
     classDef container fill:#e6ffe6,stroke:#4A4,stroke-width:2px,rx:5px
