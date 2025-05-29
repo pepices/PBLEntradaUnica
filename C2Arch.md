@@ -1,4 +1,11 @@
-[Volver a la documentación C4](readC4.md)
+# C2: Diagrama de Contenedores
+
+[Volver a la documentación C4](readC4.md) | [Anterior: C1](C1Arch.md) | [Siguiente: C3](C3Arch.md)
+
+## Descripción
+Este diagrama muestra los contenedores del sistema, incluyendo las aplicaciones, servicios y bases de datos que componen la arquitectura.
+
+## Diagrama
 
 ```mermaid
 graph TD

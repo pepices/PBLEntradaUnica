@@ -1,4 +1,11 @@
-[Volver a la documentación C4](readC4.md)
+# C4: Diagrama de Código
+
+[Volver a la documentación C4](readC4.md) | [Anterior: C3](C3Arch.md)
+
+## Descripción
+Este diagrama muestra la implementación detallada del modelo de dominio del servicio de pedidos, incluyendo las clases, interfaces y sus relaciones.
+
+## Diagrama
 
 ```mermaid
 classDiagram

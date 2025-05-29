@@ -1,4 +1,11 @@
-[Volver a la documentación C4](readC4.md)
+# C1: Diagrama de Contexto del Sistema
+
+[Volver a la documentación C4](readC4.md) | [Siguiente: C2](C2Arch.md)
+
+## Descripción
+Este diagrama muestra el contexto del sistema, incluyendo los usuarios y sistemas externos que interactúan con nuestro sistema de gestión de pedidos.
+
+## Diagrama
 
 ```mermaid
 graph TD

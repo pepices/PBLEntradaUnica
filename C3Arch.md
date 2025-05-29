@@ -1,4 +1,11 @@
-[Volver a la documentación C4](readC4.md)
+# C3: Diagrama de Componentes
+
+[Volver a la documentación C4](readC4.md) | [Anterior: C2](C2Arch.md) | [Siguiente: C4](C4Arch.md)
+
+## Descripción
+Este diagrama muestra los componentes internos del servicio de pedidos y sus interacciones, detallando la estructura y flujo de la aplicación.
+
+## Diagrama
 
 ```mermaid
 graph TD
