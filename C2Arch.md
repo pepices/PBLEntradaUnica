@@ -3,14 +3,14 @@
 ```mermaid
 graph TD
     %% --- Actores (definidos en C1, relevantes aquí para mostrar conexiones) ---
-    UsuarioWebExt(("Cliente Web\n(Usuario)"))
-    UsuarioMovilExt(("Cliente Móvil\n(Usuario)"))
-    AdminExt(("Admin del Sistema\n(Usuario)"))
+    UsuarioWebExt(("Cliente Web (Usuario)"))
+    UsuarioMovilExt(("Cliente Móvil (Usuario)"))
+    AdminExt(("Admin del Sistema (Usuario)"))
 
     %% --- Sistemas Externos (definidos en C1) ---
-    SistemaPagosExt(("Sistema de Pagos\n(Externo)"))
-    SistemaEnviosExt(("Sistema de Envíos\n(Externo)"))
-    ProveedorIdentidadExt(("Proveedor de Identidad\n(Externo)"))
+    SistemaPagosExt(("Sistema de Pagos (Externo)"))
+    SistemaEnviosExt(("Sistema de Envíos (Externo)"))
+    ProveedorIdentidadExt(("Proveedor de Identidad (Externo)"))
 
     subgraph SistemaOnline ["Sistema de Gestión de Pedidos Online"]
         direction LR
@@ -18,29 +18,29 @@ graph TD
         %% --- Contenedores de Frontend ---
         subgraph FrontendApps ["Aplicaciones Cliente"]
             direction TB
-            WebApp["Aplicación Web\n(React)\n[Contenedor: SPA]"]
-            MobileApp["Aplicación Móvil\n(Kotlin/Android)\n[Contenedor: App Nativa]"]
+            WebApp["Aplicación Web (React) - [Contenedor: SPA]"]
+            MobileApp["Aplicación Móvil (Kotlin/Android) - [Contenedor: App Nativa]"]
         end
 
         %% --- Contenedor API Gateway ---
-        APIGateway["API Gateway\n(Node.js + Express)\n[Contenedor: Aplicación Web]"]
+        APIGateway["API Gateway (Node.js + Express) - [Contenedor: Aplicación Web]"]
 
         %% --- Contenedores de Backend (Microservicios) ---
         subgraph BackendServices ["Microservicios"]
             direction TB
-            OrderService["Servicio de Pedidos\n(Java Spring Boot)\n[Contenedor: Aplicación Web API]"]
-            ProductService["Servicio de Productos\n(Python Flask)\n[Contenedor: Aplicación Web API]"]
-            InventoryService["Servicio de Inventario\n(Go)\n[Contenedor: Aplicación Web API]"]
-            NotificationService["Servicio de Notificaciones\n(Node.js)\n[Contenedor: Aplicación]"]
+            OrderService["Servicio de Pedidos (Java Spring Boot) - [Contenedor: Aplicación Web API]"]
+            ProductService["Servicio de Productos (Python Flask) - [Contenedor: Aplicación Web API]"]
+            InventoryService["Servicio de Inventario (Go) - [Contenedor: Aplicación Web API]"]
+            NotificationService["Servicio de Notificaciones (Node.js) - [Contenedor: Aplicación]"]
         end
 
         %% --- Contenedores de Almacenamiento de Datos ---
         subgraph DataStores ["Almacenamiento de Datos"]
             direction TB
-            OrderDB["BD Pedidos\n(SQL Server)\n[Contenedor: Base de Datos]"]
-            ProductDB["BD Productos\n(PostgreSQL)\n[Contenedor: Base de Datos]"]
-            InventoryDB["BD Inventario\n(MongoDB)\n[Contenedor: Base de Datos]"]
-            MessageQueue["Cola de Mensajes\n(RabbitMQ / Kafka)\n[Contenedor: Sistema de Mensajería]"]
+            OrderDB["BD Pedidos (SQL Server) - [Contenedor: Base de Datos]"]
+            ProductDB["BD Productos (PostgreSQL) - [Contenedor: Base de Datos]"]
+            InventoryDB["BD Inventario (MongoDB) - [Contenedor: Base de Datos]"]
+            MessageQueue["Cola de Mensajes (RabbitMQ / Kafka) - [Contenedor: Sistema de Mensajería]"]
         end
     end
 

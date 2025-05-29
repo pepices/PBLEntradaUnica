@@ -3,22 +3,22 @@
 ```mermaid
 graph TD
     %% --- Personas ---
-    ClienteWeb["Cliente Web\n(Usuario)"]
-    ClienteMovil["Cliente Móvil\n(Usuario)"]
-    Admin["Administrador del Sistema\n(Usuario)"]
+    ClienteWeb["Cliente Web (Usuario)"]
+    ClienteMovil["Cliente Móvil (Usuario)"]
+    Admin["Administrador del Sistema (Usuario)"]
 
     %% --- Sistema de Software (El nuestro) ---
-    SistemaPedidos["Sistema de Gestión de Pedidos Online\n[Sistema de Software]"]
+    SistemaPedidos["Sistema de Gestión de Pedidos Online - [Sistema de Software]"]
 
     %% --- Sistemas Externos ---
-    SistemaPagos["Sistema de Pagos\n(Ej: Stripe)\n[Sistema de Software Externo]"]
-    SistemaEnvios["Sistema de Envíos\n(Ej: FedEx API)\n[Sistema de Software Externo]"]
-    ProveedorIdentidad["Proveedor de Identidad\n(Ej: Auth0, EntraID)\n[Sistema de Software Externo]"]
+    SistemaPagos["Sistema de Pagos (Ej: Stripe) - [Sistema de Software Externo]"]
+    SistemaEnvios["Sistema de Envíos (Ej: FedEx API) - [Sistema de Software Externo]"]
+    ProveedorIdentidad["Proveedor de Identidad (Ej: Auth0, EntraID) - [Sistema de Software Externo]"]
 
     %% --- Relaciones ---
-    ClienteWeb -- "Realiza Pedidos,\nConsulta Estado" --> SistemaPedidos
-    ClienteMovil -- "Realiza Pedidos,\nConsulta Estado" --> SistemaPedidos
-    Admin -- "Gestiona Productos,\nRevisa Pedidos,\nConfigura Sistema" --> SistemaPedidos
+    ClienteWeb -- "Realiza Pedidos, Consulta Estado" --> SistemaPedidos
+    ClienteMovil -- "Realiza Pedidos, Consulta Estado" --> SistemaPedidos
+    Admin -- "Gestiona Productos, Revisa Pedidos, Configura Sistema" --> SistemaPedidos
 
     SistemaPedidos -- "Procesa Pagos" --> SistemaPagos
     SistemaPedidos -- "Gestiona Envíos" --> SistemaEnvios
