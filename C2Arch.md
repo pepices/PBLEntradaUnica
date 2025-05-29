@@ -1,5 +1,6 @@
 [Volver a la documentación C4](readC4.md)
 
+```mermaid
 graph TD
     %% --- Actores (definidos en C1, relevantes aquí para mostrar conexiones) ---
     UsuarioWebExt[("Cliente Web<br/>(Usuario)")]

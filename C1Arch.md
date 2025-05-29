@@ -1,5 +1,6 @@
 [Volver a la documentación C4](readC4.md)
 
+```mermaid
 graph TD
     %% --- Personas ---
     ClienteWeb[<center><b>Cliente Web</b><br/>(Usuario)</center>]

@@ -1,5 +1,6 @@
 [Volver a la documentación C4](readC4.md)
 
+```mermaid
 classDiagram
     direction LR
     class JpaRepository {

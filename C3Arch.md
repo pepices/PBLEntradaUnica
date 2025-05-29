@@ -1,5 +1,6 @@
 [Volver a la documentación C4](readC4.md)
 
+```mermaid
 graph TD
     %% --- Elementos Externos al Contenedor "Servicio de Pedidos" ---
     APIGatewayExt[("API Gateway<br/>(Llama a este servicio)")]
