@@ -8,28 +8,30 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 
 ```mermaid
 flowchart TD
-    Start["Inicio de Validación de parámetros y existencia en Siebel"]
-    Start --> ParseParams["Extraer campos desde cadena CommandLine"]
-    ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
-    CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
+    Start["Inicio de validación</br>de parámetros y existencia"]
+    Start --> ParseParams["Extraer campos</br>desde CommandLine"]
+    ParseParams --> CheckCount{"¿Número de</br>parámetros correcto?"}
+    CheckCount -- No --> ErrorCount["Error:</br>parámetros insuficientes"]
     ErrorCount --> EndErr1["Fin con error"]
 
-    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud, etc."]
-    ValidateSyntax --> CheckFields{"¿Campos requeridos presentes?"}
-    CheckFields -- No --> ErrorFields["Mostrar error: Campo obligatorio vacío"]
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis:</br>NIF, código, etc."]
+    ValidateSyntax --> CheckFields{"¿Campos requeridos</br>presentes?"}
+    CheckFields -- No --> ErrorFields["Error:</br>campo obligatorio vacío"]
     ErrorFields --> EndErr2["Fin con error"]
 
-    CheckFields -- Sí --> CheckSiebel["Consultar existencia previa en CRM Siebel"]
-    CheckSiebel --> IsAlta{"¿Operación es Alta?"}
-    IsAlta -- Sí --> ExistsAlta{"¿Ya existe en Siebel?"}
-    ExistsAlta -- Sí --> ErrorAlta["Mostrar error: Ya existe en Siebel"]
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia</br>en Siebel CRM"]
+    CheckSiebel --> IsAlta{"¿Operación es</br>Alta?"}
+    
+    IsAlta -- Sí --> ExistsAlta{"¿Ya existe</br>en Siebel?"}
+    ExistsAlta -- Sí --> ErrorAlta["Error:</br>ya existe en Siebel"]
     ErrorAlta --> EndErr3["Fin con error"]
-    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta permitida)"]
+    ExistsAlta -- No --> EndOk1["Validación</br>exitosa (Alta)"]
 
-    IsAlta -- No --> ExistsMod{"¿No existe en Siebel?"}
-    ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
+    IsAlta -- No --> ExistsMod{"¿No existe</br>en Siebel?"}
+    ExistsMod -- Sí --> ErrorMod["Error:</br>no existe en Siebel"]
     ErrorMod --> EndErr4["Fin con error"]
-    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
+    ExistsMod -- No --> EndOk2["Validación</br>exitosa (Modificación)"]
+
 ```
 
 **Nota:** El flujo de validación se ejecuta secuencialmente, verificando cada aspecto antes de proceder con la operación principal. Si alguna validación falla, se muestra un mensaje de error y se interrumpe el proceso.
