@@ -1,17 +1,3 @@
-Great. I will generate a single functional document summarizing the mini-application provided in the PowerBuilder 12.5 Classic source code.
-
-This document will include:
-
-* A high-level functionality summary
-* Input and output parameters
-* Dependencies (other components, tables, environment variables)
-* Detailed explanation of input, processing, validations, and output
-* Test tree including input, processing, and output tests using Mermaid syntax
-* Technical requirements (system, configuration, data access)
-
-I'll present it in Markdown format with Mermaid diagrams where applicable. I'll let you know as soon as the document is ready for review.
-
-
 # Documentación funcional – Aplicación SICCOD-CRM (PowerBuilder 12.5)
 
 ## Resumen de funcionalidad
