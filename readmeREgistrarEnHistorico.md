@@ -52,25 +52,25 @@ Se construye una estructura tipo registro/log:
 
 ```mermaid
 flowchart TD
-    Start["Inicio de Registro en Histórico"]
-    Start --> BuildLog["Construir estructura con datos del evento"]
-    BuildLog --> ChooseDestino{"¿Destino del registro?"}
+    Start["Inicio del proceso</br>Registrar en histórico"]
+    Start --> BuildLog["Construir estructura</br>con datos del evento"]
+    BuildLog --> ChooseDestino{"¿Dónde registrar</br>el evento?"}
 
-    ChooseDestino -- BD directa --> InsertSQL["Ejecutar INSERT en tabla histórica"]
-    InsertSQL --> LogResult1{"¿INSERT exitoso?"}
-    LogResult1 -- No --> Warn1["Aviso: No se pudo registrar en histórico"]
-    LogResult1 -- Sí --> End1["Fin: Registro exitoso en BD"]
+    ChooseDestino -- Base de datos --> InsertSQL["Ejecutar INSERT</br>en tabla de histórico"]
+    InsertSQL --> LogResult1{"¿Inserción en BD</br>fue exitosa?"}
+    LogResult1 -- No --> Warn1["Aviso:</br>registro en BD fallido"]
+    LogResult1 -- Sí --> End1["Registro exitoso</br>en base de datos"]
 
-    ChooseDestino -- Componente remoto --> CallRemote["Llamar a componente Jaguar de log"]
-    CallRemote --> LogResult2{"¿Llamada exitosa?"}
-    LogResult2 -- No --> Warn2["Aviso: No se pudo registrar remotamente"]
-    LogResult2 -- Sí --> End2["Fin: Registro exitoso vía Jaguar"]
+    ChooseDestino -- Jaguar remoto --> CallRemote["Llamar componente Jaguar</br>para log remoto"]
+    CallRemote --> LogResult2{"¿Llamada remota</br>exitosa?"}
+    LogResult2 -- No --> Warn2["Aviso:</br>registro remoto fallido"]
+    LogResult2 -- Sí --> End2["Registro exitoso</br>vía Jaguar"]
 
-    ChooseDestino -- DataWindow --> SetDW["Insertar fila en DataWindow de histórico"]
-    SetDW --> CommitDW["Commit de DataWindow"]
+    ChooseDestino -- DataWindow local --> SetDW["Insertar fila en</br>DataWindow de histórico"]
+    SetDW --> CommitDW["Ejecutar Commit</br>en DataWindow"]
     CommitDW --> LogResult3{"¿Commit exitoso?"}
-    LogResult3 -- No --> Warn3["Aviso: Error al guardar en DataWindow"]
-    LogResult3 -- Sí --> End3["Fin: Registro exitoso en DW"]
+    LogResult3 -- No --> Warn3["Aviso:</br>error al guardar en DW"]
+    LogResult3 -- Sí --> End3["Registro exitoso</br>en DataWindow"]
 ```
 
 
