@@ -98,8 +98,6 @@ flowchart TD
     click V5 "readmeValidarParametros.md" "Ver validación detallada"
 ```
 
-> **Nota:** Para ver el detalle del proceso de validación de parámetros y existencia en Siebel, consulte [readmeValidarParametros.md](./readmeValidarParametros.md)
-
 **Fuentes:** El flujo reflejado se basa en la funcionalidad descrita por el código proporcionado. Para referencia técnica: la función `CommandParm()` se documenta en PowerBuilder como la forma de leer parámetros de línea de comandos; la conexión a EAServer mediante JaguarORB permite a un cliente PB invocar componentes remotos; y los eventos *Open* de ventana se ejecutan tras abrir la ventana antes de mostrarla. Los mensajes al usuario se muestran usando `MessageBox()`.
 
 [Volver a la documentación principal](readmeOpenAI.md)
