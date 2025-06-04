@@ -118,7 +118,7 @@ flowchart TD
     VerificarPermisos{¿Usuario autorizado?}
     VerificarPermisos -- No --> ErrorPermisos
     VerificarPermisos -- Sí --> SeleccionarOperacion
-    SeleccionarOperacion{Tipo de operación (1-5)}
+    SeleccionarOperacion{"Tipo de operación (1-5)"}
     SeleccionarOperacion -- 1 --> MantenimientoInterlocutor
     SeleccionarOperacion -- 2 --> MantenimientoLocal
     SeleccionarOperacion -- 3 --> MantenimientoMaquina

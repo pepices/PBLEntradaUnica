@@ -4,3 +4,20 @@
 4.- great, could you please deep dive into 'interlocutor management' process in order to better explain its steps discovering data validated and commited and all the business logic inside?
 5.- And least but not last, could you please explode 'Jaguar server' box in previous mermaid to deep dive inside and do the same analisis like you did with 'Interlocutor Management'?
 6.- Great, now could you please create a pretty good markdown browsable set to put inside the informacion extracted from the chat beggining? You can leave it inside current working directory
+
+
+
+
+
+Hello. I am working with a legacy system implemented in PowerBuilder 12 Classic, who uses DataWindows, NVOs (Non-Visual Objects), User Objects (UO), and scripts embedded in window events and controls. The system is designed under a distributed architecture using EA Server (Enterprise Application Server), formerly known as Jaguar CTS (Component Transaction Server), from Sybase company.
+PowerBuilder applications are deployed as distributed components (Jaguar Components) running on the EA Server application server, facilitating the decoupling of business logic and presentation. In addition, the data backend is supported by an Informix 11.5 database (IBM Informix Dynamic Server), using ODBC or native drivers (such as I-Connect) for connection.
+File Entrada_unica_2.txt in current project folder contains the source implemented in Power Builder and I need you to generate business requirements and functional analysis document with the following content
+o Summary of the functionality related to the source code
+o Input / Output parameters
+o Dependencies with other sources, database tables, variables from other sources or general environment variables
+o Detail of the functionality in input, processing, validations and output
+o Test tree for certification and testing of such a source (input tests, processing tests and output tests).
+o Technical aspects necessary for the execution of this source (system requirements, configuration, access to data sources or interfaces, necessary technical elements of configuration and execution...).
+For the documentation to be generated, it uses markdown syntax, and for the test and execution diagrams and flows, it uses mermaid coding.
+Please generate in this folder a pretty good markdown (readme.md) browsable set with this documentation 
+
