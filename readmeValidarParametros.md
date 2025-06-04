@@ -70,4 +70,4 @@ flowchart TD
     ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
 ```
 
-[Volver al diagrama de flujo principal](readmeOpenAI002.md)
+[Volver al diagrama de flujo principal](./readmeOpenAI002.md)

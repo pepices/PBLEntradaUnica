@@ -90,6 +90,7 @@ flowchart TD
     Histo5 --> EndCase5["Fin caso 5"]
 
     %% Enlaces a validación detallada
+    linkStyle 0 stroke:#2ecc71,stroke-width:4px,color:red;
     click V1 "readmeValidarParametros.md" "Ver validación detallada"
     click V2 "readmeValidarParametros.md" "Ver validación detallada"
     click V3 "readmeValidarParametros.md" "Ver validación detallada"
