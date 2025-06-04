@@ -8,30 +8,29 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 
 ```mermaid
 flowchart TD
-    Start["Inicio de validación</br>de parámetros y existencia"]
-    Start --> ParseParams["Extraer campos</br>desde CommandLine"]
+    Start["Inicio de validación</br>de parámetros y existencia</br>en Siebel"]
+    Start --> ParseParams["Extraer campos</br>desde la cadena CommandLine"]
     ParseParams --> CheckCount{"¿Número de</br>parámetros correcto?"}
     CheckCount -- No --> ErrorCount["Error:</br>parámetros insuficientes"]
     ErrorCount --> EndErr1["Fin con error"]
 
-    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis:</br>NIF, código, etc."]
-    ValidateSyntax --> CheckFields{"¿Campos requeridos</br>presentes?"}
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis:</br>NIF, códigos, longitud"]
+    ValidateSyntax --> CheckFields{"¿Campos obligatorios</br>están presentes?"}
     CheckFields -- No --> ErrorFields["Error:</br>campo obligatorio vacío"]
     ErrorFields --> EndErr2["Fin con error"]
 
-    CheckFields -- Sí --> CheckSiebel["Consultar existencia</br>en Siebel CRM"]
-    CheckSiebel --> IsAlta{"¿Operación es</br>Alta?"}
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia</br>previa en Siebel CRM"]
+    CheckSiebel --> IsAlta{"¿Operación solicitada</br>es un Alta?"}
     
-    IsAlta -- Sí --> ExistsAlta{"¿Ya existe</br>en Siebel?"}
+    IsAlta -- Sí --> ExistsAlta{"¿Ya existe el objeto</br>en Siebel CRM?"}
     ExistsAlta -- Sí --> ErrorAlta["Error:</br>ya existe en Siebel"]
     ErrorAlta --> EndErr3["Fin con error"]
-    ExistsAlta -- No --> EndOk1["Validación</br>exitosa (Alta)"]
+    ExistsAlta -- No --> EndOk1["Validación exitosa:</br>Alta permitida"]
 
-    IsAlta -- No --> ExistsMod{"¿No existe</br>en Siebel?"}
+    IsAlta -- No --> ExistsMod{"¿No existe el objeto</br>en Siebel CRM?"}
     ExistsMod -- Sí --> ErrorMod["Error:</br>no existe en Siebel"]
     ErrorMod --> EndErr4["Fin con error"]
-    ExistsMod -- No --> EndOk2["Validación</br>exitosa (Modificación)"]
-
+    ExistsMod -- No --> EndOk2["Validación exitosa:</br>Modificación permitida"]
 ```
 
 **Nota:** El flujo de validación se ejecuta secuencialmente, verificando cada aspecto antes de proceder con la operación principal. Si alguna validación falla, se muestra un mensaje de error y se interrumpe el proceso.
