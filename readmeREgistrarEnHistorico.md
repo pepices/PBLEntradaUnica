@@ -47,4 +47,29 @@ Se construye una estructura tipo registro/log:
 - El evento queda registrado.
 - La aplicación puede auditar eventos por usuario, tipo, y resultado.
 
+
+```mermaid
+flowchart TD
+    Start["Inicio de Registro en Histórico"]
+    Start --> BuildLog["Construir estructura con datos del evento"]
+    BuildLog --> ChooseDestino{"¿Destino del registro?"}
+
+    ChooseDestino -- BD directa --> InsertSQL["Ejecutar INSERT en tabla histórica"]
+    InsertSQL --> LogResult1{"¿INSERT exitoso?"}
+    LogResult1 -- No --> Warn1["Aviso: No se pudo registrar en histórico"]
+    LogResult1 -- Sí --> End1["Fin: Registro exitoso en BD"]
+
+    ChooseDestino -- Componente remoto --> CallRemote["Llamar a componente Jaguar de log"]
+    CallRemote --> LogResult2{"¿Llamada exitosa?"}
+    LogResult2 -- No --> Warn2["Aviso: No se pudo registrar remotamente"]
+    LogResult2 -- Sí --> End2["Fin: Registro exitoso vía Jaguar"]
+
+    ChooseDestino -- DataWindow --> SetDW["Insertar fila en DataWindow de histórico"]
+    SetDW --> CommitDW["Commit de DataWindow"]
+    CommitDW --> LogResult3{"¿Commit exitoso?"}
+    LogResult3 -- No --> Warn3["Aviso: Error al guardar en DataWindow"]
+    LogResult3 -- Sí --> End3["Fin: Registro exitoso en DW"]
+```
+
+
 [Volver al diagrama principal](./readmeOpenAI002.md)
