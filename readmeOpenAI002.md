@@ -1,16 +1,3 @@
-Perfecto. Generaré un diagrama Mermaid que represente el flujo funcional completo de la aplicación, desde el arranque hasta la ejecución específica de cada formulario de mantenimiento.
-
-Incluiré:
-
-* Rutas de inicialización (conexión a Jaguar, validación de usuario, parsing de parámetros)
-* Disparadores de eventos relevantes
-* Validaciones específicas para cada tipo de formulario (interlocutor, local, máquina, modelo, local-interlocutor)
-* Mensajes de error o validación funcional
-* Mapeos de datos hacia los componentes de Jaguar/EAServer
-
-Te avisaré en cuanto el diagrama esté listo para revisión.
-
-
 # Diagrama de flujo funcional de SICCOD-CRM
 
 La aplicación inicia leyendo los parámetros de la línea de comandos con la función PowerBuilder `CommandParm()`. Se recupera la cadena de argumentos y se parsean las partes esperadas. Si la cantidad o el formato de parámetros es incorrecto, se muestra un mensaje de error al usuario (mediante `MessageBox`) y se finaliza la ejecución. A continuación, la aplicación establece una conexión con el servidor Jaguar/EAServer usando un objeto JaguarORB como cliente de EJB. En esa conexión se envían las credenciales del usuario para validar la sesión. Si la validación de usuario falla, se informa el error al usuario y se detiene el flujo.
