@@ -9,7 +9,7 @@ This document will include:
 * Test tree including input, processing, and output tests using Mermaid syntax
 * Technical requirements (system, configuration, data access)
 
-I’ll present it in Markdown format with Mermaid diagrams where applicable. I’ll let you know as soon as the document is ready for review.
+I'll present it in Markdown format with Mermaid diagrams where applicable. I'll let you know as soon as the document is ready for review.
 
 
 # Documentación funcional – Aplicación SICCOD-CRM (PowerBuilder 12.5)
@@ -75,7 +75,7 @@ El `n_cst_connection` se encarga de leer del registro de Windows los datos de co
 
 1. **Arranque:** Se ejecuta la aplicación PowerBuilder, que instancia la ventana principal `w_siccod_frame`. En el evento *create* de la ventana, se crea el menú `m_mdi` y el control MDI (`mdi_1`). Se registran eventos de inicialización como `uePostConstructor` y `ueInitDisparadores`.
 
-2. **Lectura de parámetros:** Inmediatamente después, se obtiene la cadena de parámetros de entrada (`CommandLine`). Se invoca la rutina `of_parametros_array(CommandLine, ai_tipo)`, que divide la cadena por ‘|’ en un arreglo interno (`is_parametros[]`). Si faltan campos o el formato es inválido, devuelve un error (establece `il_codretorno` de error y muestra mensaje).
+2. **Lectura de parámetros:** Inmediatamente después, se obtiene la cadena de parámetros de entrada (`CommandLine`). Se invoca la rutina `of_parametros_array(CommandLine, ai_tipo)`, que divide la cadena por '|' en un arreglo interno (`is_parametros[]`). Si faltan campos o el formato es inválido, devuelve un error (establece `il_codretorno` de error y muestra mensaje).
 
 3. **Inicialización Jaguar/BD:** Se llama a `of_inicializarjaguarini` (pasando la ruta del INI obtenido por `App.SrvINI.GetFile()`). Esta función lee valores por defecto de Jaguar (si no están en el registro) y luego crea el objeto `n_cst_connection` (por ejemplo `inv_Connect = Create n_cst_connection`). En este NVO se asignan los parámetros de conexión:
 
@@ -86,7 +86,7 @@ El `n_cst_connection` se encarga de leer del registro de Windows los datos de co
 
 4. **Configuración de servicios:** Se inicializan servicios de DataWindow (`PBInit`), se ejecutan eventos `ueInitResize` y se abren los eventos dinámicamente.
 
-5. **Autenticación de usuario:** Se recupera el usuario actual (por ejemplo con `of_getinfousuario`) y se invoca `of_permuser(ai_tipo)`, que usa `n_cst_so_permventana` para verificar si el usuario tiene permisos sobre la ventana/operación solicitada. Si el usuario **no** tiene permiso o no existe en el sistema, se muestra un mensaje de error (“Usuario no autorizado”) y la aplicación termina estableciendo `il_codretorno` de error.
+5. **Autenticación de usuario:** Se recupera el usuario actual (por ejemplo con `of_getinfousuario`) y se invoca `of_permuser(ai_tipo)`, que usa `n_cst_so_permventana` para verificar si el usuario tiene permisos sobre la ventana/operación solicitada. Si el usuario **no** tiene permiso o no existe en el sistema, se muestra un mensaje de error ("Usuario no autorizado") y la aplicación termina estableciendo `il_codretorno` de error.
 
 6. **Selección de flujo según tipo:** Con el usuario validado, se procede a elegir la operación según el parámetro `ai_tipo` (entero). Internamente se usa un `CHOOSE CASE` o similar:
 
@@ -96,7 +96,7 @@ El `n_cst_connection` se encarga de leer del registro de Windows los datos de co
    * **Caso 4 (Modelo):** Se abre **w\_form\_modelo**. Gestiona los modelos de máquinas o equipos. Funciona como los anteriores: carga modelos existentes (desde Informix) y permite inserciones/ediciones.
    * **Caso 5 (Local-Interlocutor):** Se abre **w\_form\_localint**, que relaciona locales con interlocutores. Por ejemplo, asignar un interlocutor a un local o viceversa. Actualiza las tablas de relación en Informix.
 
-   En cada uno de estos formularios, al finalizar la acción (p.ej. al presionar “Guardar”), se aplican transacciones a la base de datos Informix (con `UPDATE`/`INSERT` a través del objeto `inv_Connect`) y se cierra la ventana si corresponde. Se asigna también el código de resultado final, por ejemplo `il_codretorno = 0` (éxito) o un valor de error si algo salió mal (fallo de BD, validación, etc.).
+   En cada uno de estos formularios, al finalizar la acción (p.ej. al presionar "Guardar"), se aplican transacciones a la base de datos Informix (con `UPDATE`/`INSERT` a través del objeto `inv_Connect`) y se cierra la ventana si corresponde. Se asigna también el código de resultado final, por ejemplo `il_codretorno = 0` (éxito) o un valor de error si algo salió mal (fallo de BD, validación, etc.).
 
 7. **Comunicación con CRM/Siebel:** En funciones internas (por ejemplo, `of_no_en_siebel`), se verifica si el registro existe en Siebel CRM. De acuerdo a la lógica, si el interlocutor o máquina es nuevo, se invocaría un servicio de Siebel (vía Jaguar) para darlo de alta. Si falla la integración (por ejemplo, no existe el cliente en Siebel), se asigna un código de error específico (`il_retorno_siebel_nueva`), se muestra mensaje, y se interrumpe el proceso.
 
@@ -155,3 +155,5 @@ En resumen, la aplicación requiere un cliente PowerBuilder 12.5 con acceso al s
 
 * La arquitectura de PowerBuilder con EAServer (antiguo Jaguar).
 * Requisitos de conexión Informix para PowerBuilder.
+
+Para ver el diagrama de flujo funcional detallado, consulte [readmeOpenAI002.md](readmeOpenAI002.md).
