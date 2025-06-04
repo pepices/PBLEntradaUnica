@@ -45,7 +45,7 @@ flowchart TD
     K -- No --> H5["Abrir formulario especial (Caso 5)"]
 
     %% Caso 1
-    H1 --> V1["Validar parámetros y existencia en Siebel"]
+    H1 --> V1["<a href='./readmeValidarParametros.md'>Validar parámetros y existencia en Siebel</a>"]
     V1 --> W1{"¿Datos válidos?"}
     W1 -- No --> E1["Error funcional (MessageBox)"]
     W1 -- Sí --> N1["Ejecutar alta de interlocutor"]
@@ -54,7 +54,7 @@ flowchart TD
     Histo1 --> EndCase1["Fin caso 1"]
 
     %% Caso 2
-    H2 --> V2["Validar parámetros y existencia en Siebel"]
+    H2 --> V2["<a href='./readmeValidarParametros.md'>Validar parámetros y existencia en Siebel</a>"]
     V2 --> W2{"¿Datos válidos?"}
     W2 -- No --> E2["Error funcional (MessageBox)"]
     W2 -- Sí --> N2["Ejecutar modificación de interlocutor"]
@@ -63,7 +63,7 @@ flowchart TD
     Histo2 --> EndCase2["Fin caso 2"]
 
     %% Caso 3
-    H3 --> V3["Validar parámetros y existencia en Siebel"]
+    H3 --> V3["<a href='./readmeValidarParametros.md'>Validar parámetros y existencia en Siebel</a>"]
     V3 --> W3{"¿Datos válidos?"}
     W3 -- No --> E3["Error funcional (MessageBox)"]
     W3 -- Sí --> N3["Ejecutar alta de local"]
@@ -72,7 +72,7 @@ flowchart TD
     Histo3 --> EndCase3["Fin caso 3"]
 
     %% Caso 4
-    H4 --> V4["Validar parámetros y existencia en Siebel"]
+    H4 --> V4["<a href='./readmeValidarParametros.md'>Validar parámetros y existencia en Siebel</a>"]
     V4 --> W4{"¿Datos válidos?"}
     W4 -- No --> E4["Error funcional (MessageBox)"]
     W4 -- Sí --> N4["Ejecutar modificación de local"]
@@ -81,7 +81,7 @@ flowchart TD
     Histo4 --> EndCase4["Fin caso 4"]
 
     %% Caso 5
-    H5 --> V5["Validar parámetros y datos"]
+    H5 --> V5["<a href='./readmeValidarParametros.md'>Validar parámetros y datos</a>"]
     V5 --> W5{"¿Datos válidos?"}
     W5 -- No --> E5["Error funcional (MessageBox)"]
     W5 -- Sí --> N5["Ejecutar operación especial"]
@@ -89,11 +89,9 @@ flowchart TD
     R5 --> Histo5["Registrar en histórico"]
     Histo5 --> EndCase5["Fin caso 5"]
 
-    %% Enlaces a validación detallada
+    %% Estilo de enlaces
     linkStyle default stroke:#2ecc71,stroke-width:2px,color:red;
 ```
-
-**Nota:** Para ver el detalle del proceso de validación de parámetros y existencia en Siebel, consulte [readmeValidarParametros.md](./readmeValidarParametros.md).
 
 **Fuentes:** El flujo reflejado se basa en la funcionalidad descrita por el código proporcionado. Para referencia técnica: la función `CommandParm()` se documenta en PowerBuilder como la forma de leer parámetros de línea de comandos; la conexión a EAServer mediante JaguarORB permite a un cliente PB invocar componentes remotos; y los eventos *Open* de ventana se ejecutan tras abrir la ventana antes de mostrarla. Los mensajes al usuario se muestran usando `MessageBox()`.
 
