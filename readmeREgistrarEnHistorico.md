@@ -1,54 +1,67 @@
-🔹 F22: Registrar en histórico
-Objetivo: Registrar en una tabla o log los eventos realizados (alta/modificación) en el contexto SICCOD-CRM para auditoría, seguimiento y trazabilidad.
+# Proceso de Registro en Histórico
 
-Pasos funcionales:
+## Descripción General
 
-Recopilación de datos:
-Se recoge un conjunto de datos comunes para todas las operaciones:
+Este documento detalla el proceso de registro en el histórico de las operaciones realizadas en la aplicación SICCOD-CRM.
 
-ID del usuario que ejecutó
+## Flujo de Registro
 
-Timestamp del evento
+```mermaid
+flowchart TD
+    Start(["Inicio registro"]) --> R1["Validar datos a registrar"]
+    R1 --> R2["Preparar registro histórico"]
+    R2 --> R3["Insertar en tabla de histórico"]
+    R3 --> R4["Verificar inserción"]
+    R4 --> R5["Confirmar registro"]
+    R5 --> End(["Fin registro"])
 
-Tipo de operación (alta, modificación, sincronización)
+    %% Estilo de enlaces
+    linkStyle default stroke:#2ecc71,stroke-width:2px,color:red;
+```
 
-ID del objeto (interlocutor/local/etc.)
+## Detalle del Proceso
 
-Resultado (ok, error, código CRM, etc.)
+### 1. Validación de Datos
+- Verifica la integridad de los datos a registrar
+- Comprueba la presencia de campos obligatorios
+- Valida el formato de los datos
 
-Formato estructurado:
-Se construye una estructura tipo registro/log:
+### 2. Preparación del Registro
+- Formatea los datos según el esquema de histórico
+- Añade metadatos (fecha, usuario, etc.)
+- Prepara la transacción
 
-json
-Copy
-Edit
-{
-  "usuario": "jsanchez",
-  "fecha": "2025-06-04 10:21",
-  "tipo_operacion": "alta_interlocutor",
-  "id_objeto": "1-7RAAH",
-  "resultado": "ok"
-}
-Inserción en histórico:
+### 3. Inserción en Histórico
+- Ejecuta la inserción en la tabla de histórico
+- Verifica la conexión a la base de datos
+- Maneja posibles errores de inserción
 
-Si es un DataWindow → se usa dw_historial.InsertRow() + SetItem()
+### 4. Verificación
+- Comprueba que el registro se ha insertado correctamente
+- Valida la integridad de los datos insertados
+- Verifica la consistencia del histórico
 
-Si es directo a BD → INSERT INTO t_historial_operaciones (...) VALUES (...)
+### 5. Confirmación
+- Confirma la transacción
+- Registra el éxito de la operación
+- Notifica al usuario si es necesario
 
-Si es remoto → se llama a un componente Jaguar: n_cst_do_log_operacion.InsertLog(...)
+## Estructura del Histórico
 
-Control de errores:
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| ID | Integer | Identificador único del registro |
+| Fecha | DateTime | Fecha y hora del registro |
+| Usuario | String | Usuario que realiza la operación |
+| Operación | String | Tipo de operación realizada |
+| Datos | Text | Datos asociados a la operación |
+| Estado | String | Estado del registro |
 
-Si la inserción falla, no se bloquea el proceso principal pero se muestra Warning: no se pudo registrar en histórico.
+## Notas Técnicas
 
-Se pueden almacenar en local para sincronizar luego.
+- El registro en histórico es una operación transaccional
+- Se mantiene un log detallado de todas las operaciones
+- Los registros son inmutables una vez creados
+- Se implementa un sistema de backup automático
 
-Confirmación visual:
-
-En algunos casos se muestra MessageBox("Operación registrada exitosamente").
-
-Resultado:
-
-El evento queda registrado.
-
-La aplicación puede auditar eventos por usuario, tipo, y resultado.
+[Volver al diagrama principal](./readmeOpenAI002.md)
