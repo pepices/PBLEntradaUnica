@@ -10,25 +10,25 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 flowchart TD
     Start["Inicio de Validación de parámetros y existencia en Siebel"] --> ParseParams["Extraer campos desde cadena CommandLine"]
     ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
-    CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
+    CheckCount -- No --> ErrorCount["Error: Número de parámetros insuficiente"]
     ErrorCount --> EndErr1["Fin con error"]
 
-    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud, etc."]
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud"]
     ValidateSyntax --> CheckFields{"¿Campos requeridos presentes?"}
-    CheckFields -- No --> ErrorFields["Mostrar error: Campo obligatorio vacío"]
+    CheckFields -- No --> ErrorFields["Error: Campo obligatorio vacío"]
     ErrorFields --> EndErr2["Fin con error"]
 
-    CheckFields -- Sí --> CheckSiebel["Consultar existencia previa en CRM Siebel"]
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia en CRM Siebel"]
     CheckSiebel --> IsAlta{"¿Operación es Alta?"}
     IsAlta -- Sí --> ExistsAlta{"¿Ya existe en Siebel?"}
-    ExistsAlta -- Sí --> ErrorAlta["Mostrar error: Ya existe en Siebel"]
+    ExistsAlta -- Sí --> ErrorAlta["Error: Ya existe en Siebel"]
     ErrorAlta --> EndErr3["Fin con error"]
-    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta permitida)"]
+    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta)"]
 
     IsAlta -- No --> ExistsMod{"¿No existe en Siebel?"}
-    ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
+    ExistsMod -- Sí --> ErrorMod["Error: No existe en Siebel para modificar"]
     ErrorMod --> EndErr4["Fin con error"]
-    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
+    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación)"]
 
     %% Estilo de cajas
     classDef default fill:#f9f,stroke:#333,stroke-width:2px;
