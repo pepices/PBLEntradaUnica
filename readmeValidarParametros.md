@@ -46,24 +46,28 @@ Se mapean los campos del parámetro a variables internas:
 
 ```mermaid
 flowchart TD
-    A[Inicio validación] --> B[Contar campos]
-    B --> C{¿Número de campos correcto?}
-    C -- No --> D[Error: campos insuficientes]
-    C -- Sí --> E[Mapear campos]
-    E --> F[Validar sintaxis]
-    F --> G{¿Sintaxis válida?}
-    G -- No --> H[Error: formato inválido]
-    G -- Sí --> I[Consultar en Siebel]
-    I --> J{¿Existe en Siebel?}
-    J -- Sí --> K{¿Es alta?}
-    K -- Sí --> L[Error: ya existe]
-    K -- No --> M[Continuar]
-    J -- No --> N{¿Es modificación?}
-    N -- Sí --> O[Error: no existe]
-    N -- No --> M
-    M --> P[Fin validación]
-    D --> P
-    H --> P
-    L --> P
-    O --> P
+    Start["Inicio de Validación de parámetros y existencia en Siebel"]
+    Start --> ParseParams["Extraer campos desde cadena CommandLine"]
+    ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
+    CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
+    ErrorCount --> EndErr1["Fin con error"]
+
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud, etc."]
+    ValidateSyntax --> CheckFields{"¿Campos requeridos presentes?"}
+    CheckFields -- No --> ErrorFields["Mostrar error: Campo obligatorio vacío"]
+    ErrorFields --> EndErr2["Fin con error"]
+
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia previa en CRM Siebel"]
+    CheckSiebel --> IsAlta{"¿Operación es Alta?"}
+    IsAlta -- Sí --> ExistsAlta{"¿Ya existe en Siebel?"}
+    ExistsAlta -- Sí --> ErrorAlta["Mostrar error: Ya existe en Siebel"]
+    ErrorAlta --> EndErr3["Fin con error"]
+    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta permitida)"]
+
+    IsAlta -- No --> ExistsMod{"¿No existe en Siebel?"}
+    ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
+    ErrorMod --> EndErr4["Fin con error"]
+    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
 ```
+
+[Volver al diagrama de flujo principal](readmeOpenAI002.md)

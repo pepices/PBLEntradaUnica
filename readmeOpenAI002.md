@@ -88,6 +88,13 @@ flowchart TD
     N5 --> R5["Llamar componente Jaguar otro"]
     R5 --> Histo5["Registrar en histórico"]
     Histo5 --> EndCase5["Fin caso 5"]
+
+    %% Enlaces a validación detallada
+    click V1 "readmeValidarParametros.md" "Ver validación detallada"
+    click V2 "readmeValidarParametros.md" "Ver validación detallada"
+    click V3 "readmeValidarParametros.md" "Ver validación detallada"
+    click V4 "readmeValidarParametros.md" "Ver validación detallada"
+    click V5 "readmeValidarParametros.md" "Ver validación detallada"
 ```
 
 **Fuentes:** El flujo reflejado se basa en la funcionalidad descrita por el código proporcionado. Para referencia técnica: la función `CommandParm()` se documenta en PowerBuilder como la forma de leer parámetros de línea de comandos; la conexión a EAServer mediante JaguarORB permite a un cliente PB invocar componentes remotos; y los eventos *Open* de ventana se ejecutan tras abrir la ventana antes de mostrarla. Los mensajes al usuario se muestran usando `MessageBox()`.
