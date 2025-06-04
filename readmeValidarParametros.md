@@ -8,15 +8,28 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 
 ```mermaid
 flowchart TD
-    Start(["Inicio validación"]) --> V1["Validar formato de parámetros"]
-    V1 --> V2["Verificar existencia en Siebel"]
-    V2 --> V3["Validar permisos de usuario"]
-    V3 --> V4["Comprobar integridad de datos"]
-    V4 --> V5["Confirmar sincronización"]
-    V5 --> End(["Fin validación"])
+    Start["Inicio de Validación de parámetros y existencia en Siebel"]
+    Start --> ParseParams["Extraer campos desde cadena CommandLine"]
+    ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
+    CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
+    ErrorCount --> EndErr1["Fin con error"]
 
-    %% Estilo de enlaces
-    linkStyle default stroke:#2ecc71,stroke-width:2px,color:red;
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud, etc."]
+    ValidateSyntax --> CheckFields{"¿Campos requeridos presentes?"}
+    CheckFields -- No --> ErrorFields["Mostrar error: Campo obligatorio vacío"]
+    ErrorFields --> EndErr2["Fin con error"]
+
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia previa en CRM Siebel"]
+    CheckSiebel --> IsAlta{"¿Operación es Alta?"}
+    IsAlta -- Sí --> ExistsAlta{"¿Ya existe en Siebel?"}
+    ExistsAlta -- Sí --> ErrorAlta["Mostrar error: Ya existe en Siebel"]
+    ErrorAlta --> EndErr3["Fin con error"]
+    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta permitida)"]
+
+    IsAlta -- No --> ExistsMod{"¿No existe en Siebel?"}
+    ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
+    ErrorMod --> EndErr4["Fin con error"]
+    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
 ```
 
 ## Detalle de Validaciones
