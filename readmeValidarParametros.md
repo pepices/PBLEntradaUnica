@@ -8,8 +8,7 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 
 ```mermaid
 flowchart TD
-    Start["Inicio de Validación de parámetros y existencia en Siebel"]
-    Start --> ParseParams["Extraer campos desde cadena CommandLine"]
+    Start["Inicio de Validación de parámetros y existencia en Siebel"] --> ParseParams["Extraer campos desde cadena CommandLine"]
     ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
     CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
     ErrorCount --> EndErr1["Fin con error"]
@@ -30,7 +29,15 @@ flowchart TD
     ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
     ErrorMod --> EndErr4["Fin con error"]
     ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
+
+    %% Estilo de cajas
+    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef validation fill:#bbf,stroke:#333,stroke-width:2px;
+    class Start,EndErr1,EndErr2,EndErr3,EndErr4,EndOk1,EndOk2 default;
+    class ParseParams,CheckCount,ValidateSyntax,CheckFields,CheckSiebel,IsAlta,ExistsAlta,ExistsMod validation;
 ```
+
+**Nota:** El flujo de validación se ejecuta secuencialmente, verificando cada aspecto antes de proceder con la operación principal. Si alguna validación falla, se muestra un mensaje de error y se interrumpe el proceso.
 
 ## Detalle de Validaciones
 
