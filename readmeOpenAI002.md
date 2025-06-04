@@ -25,69 +25,69 @@ Al abrirse la ventana principal `w_siccod_frame`, se dispara su evento **Open**.
 
 ```mermaid
 flowchart TD
-    Start(("Inicio de la aplicación"))
-    Start --> A[Leer parámetros de entrada (CommandLine)]
-    A --> B{¿Parámetros válidos?}
-    B --|No| End1[Mostrar error de parámetros\n(MessageBox) / Salir]
-    B --|Sí| C[Conectar a Jaguar/EAServer\ny validar usuario]
-    C --> D{¿Usuario válido?}
-    D --|No| End2[Mostrar error de usuario\n(MessageBox) / Salir]
-    D --|Sí| E[Abrir ventana principal w_siccod_frame]
-    E --> F[Evento Open de w_siccod_frame]
-    F --> G{Tipo de mantenimiento = 1?}
-    G --|Sí| H1[Abrir w_form_interlocutor\n(Alta interlocutor)]
-    G --|No| I{Tipo de mantenimiento = 2?}
-    I --|Sí| H2[Abrir w_form_interlocutor\n(Modificación interlocutor)]
-    I --|No| J{Tipo de mantenimiento = 3?}
-    J --|Sí| H3[Abrir w_form_local\n(Alta local)]
-    J --|No| K{Tipo de mantenimiento = 4?}
-    K --|Sí| H4[Abrir w_form_local\n(Modificación local)]
-    K --|No| H5[Abrir w_form_otro\n(Caso 5)]
-    
+    Start(["Inicio de la aplicación"])
+    Start --> A["Leer parámetros de entrada (CommandLine)"]
+    A --> B{"¿Parámetros válidos?"}
+    B -- No --> End1["Mostrar error de parámetros (MessageBox) y salir"]
+    B -- Sí --> C["Conectar a Jaguar/EAServer y validar usuario"]
+    C --> D{"¿Usuario válido?"}
+    D -- No --> End2["Mostrar error de usuario (MessageBox) y salir"]
+    D -- Sí --> E["Abrir ventana principal w_siccod_frame"]
+    E --> F["Evento Open de w_siccod_frame"]
+    F --> G{"Tipo de mantenimiento = 1?"}
+    G -- Sí --> H1["Abrir w_form_interlocutor (Alta interlocutor)"]
+    G -- No --> I{"Tipo de mantenimiento = 2?"}
+    I -- Sí --> H2["Abrir w_form_interlocutor (Modificación interlocutor)"]
+    I -- No --> J{"Tipo de mantenimiento = 3?"}
+    J -- Sí --> H3["Abrir w_form_local (Alta local)"]
+    J -- No --> K{"Tipo de mantenimiento = 4?"}
+    K -- Sí --> H4["Abrir w_form_local (Modificación local)"]
+    K -- No --> H5["Abrir formulario especial (Caso 5)"]
+
     %% Caso 1
-    H1 --> V1[Validar parámetros y existencia en Siebel]
-    V1 --> W1{¿Datos válidos?}
-    W1 --|No| E1[Mostrar error funcional (MessageBox)\nCancelar operación]
-    W1 --|Sí| N1[Ejecutar alta de interlocutor]
-    N1 --> R1[Llamar n_cst_do_crm_alta_interlocutor]
-    R1 --> Histo1[Registrar en histórico]
-    Histo1 --> EndCase1[Fin caso 1]
-    
+    H1 --> V1["Validar parámetros y existencia en Siebel"]
+    V1 --> W1{"¿Datos válidos?"}
+    W1 -- No --> E1["Error funcional (MessageBox)"]
+    W1 -- Sí --> N1["Ejecutar alta de interlocutor"]
+    N1 --> R1["Llamar componente Jaguar alta_interlocutor"]
+    R1 --> Histo1["Registrar en histórico"]
+    Histo1 --> EndCase1["Fin caso 1"]
+
     %% Caso 2
-    H2 --> V2[Validar parámetros y existencia en Siebel]
-    V2 --> W2{¿Datos válidos?}
-    W2 --|No| E2[Mostrar error funcional (MessageBox)\nCancelar operación]
-    W2 --|Sí| N2[Ejecutar modificación de interlocutor]
-    N2 --> R2[Llamar n_cst_do_crm_mod_interlocutor]
-    R2 --> Histo2[Registrar en histórico]
-    Histo2 --> EndCase2[Fin caso 2]
-    
+    H2 --> V2["Validar parámetros y existencia en Siebel"]
+    V2 --> W2{"¿Datos válidos?"}
+    W2 -- No --> E2["Error funcional (MessageBox)"]
+    W2 -- Sí --> N2["Ejecutar modificación de interlocutor"]
+    N2 --> R2["Llamar componente Jaguar mod_interlocutor"]
+    R2 --> Histo2["Registrar en histórico"]
+    Histo2 --> EndCase2["Fin caso 2"]
+
     %% Caso 3
-    H3 --> V3[Validar parámetros y existencia en Siebel]
-    V3 --> W3{¿Datos válidos?}
-    W3 --|No| E3[Mostrar error funcional (MessageBox)\nCancelar operación]
-    W3 --|Sí| N3[Ejecutar alta de local]
-    N3 --> R3[Llamar n_cst_do_crm_alta_local]
-    R3 --> Histo3[Registrar en histórico]
-    Histo3 --> EndCase3[Fin caso 3]
-    
+    H3 --> V3["Validar parámetros y existencia en Siebel"]
+    V3 --> W3{"¿Datos válidos?"}
+    W3 -- No --> E3["Error funcional (MessageBox)"]
+    W3 -- Sí --> N3["Ejecutar alta de local"]
+    N3 --> R3["Llamar componente Jaguar alta_local"]
+    R3 --> Histo3["Registrar en histórico"]
+    Histo3 --> EndCase3["Fin caso 3"]
+
     %% Caso 4
-    H4 --> V4[Validar parámetros y existencia en Siebel]
-    V4 --> W4{¿Datos válidos?}
-    W4 --|No| E4[Mostrar error funcional (MessageBox)\nCancelar operación]
-    W4 --|Sí| N4[Ejecutar modificación de local]
-    N4 --> R4[Llamar n_cst_do_crm_mod_local]
-    R4 --> Histo4[Registrar en histórico]
-    Histo4 --> EndCase4[Fin caso 4]
-    
+    H4 --> V4["Validar parámetros y existencia en Siebel"]
+    V4 --> W4{"¿Datos válidos?"}
+    W4 -- No --> E4["Error funcional (MessageBox)"]
+    W4 -- Sí --> N4["Ejecutar modificación de local"]
+    N4 --> R4["Llamar componente Jaguar mod_local"]
+    R4 --> Histo4["Registrar en histórico"]
+    Histo4 --> EndCase4["Fin caso 4"]
+
     %% Caso 5
-    H5 --> V5[Validar parámetros y datos específicos]
-    V5 --> W5{¿Datos válidos?}
-    W5 --|No| E5[Mostrar error funcional (MessageBox)\nCancelar operación]
-    W5 --|Sí| N5[Ejecutar operación especial (Sincronización)]
-    N5 --> R5[Llamar n_cst_do_crm_otro]
-    R5 --> Histo5[Registrar en histórico]
-    Histo5 --> EndCase5[Fin caso 5]
+    H5 --> V5["Validar parámetros y datos"]
+    V5 --> W5{"¿Datos válidos?"}
+    W5 -- No --> E5["Error funcional (MessageBox)"]
+    W5 -- Sí --> N5["Ejecutar operación especial"]
+    N5 --> R5["Llamar componente Jaguar otro"]
+    R5 --> Histo5["Registrar en histórico"]
+    Histo5 --> EndCase5["Fin caso 5"]
 ```
 
 **Fuentes:** El flujo reflejado se basa en la funcionalidad descrita por el código proporcionado. Para referencia técnica: la función `CommandParm()` se documenta en PowerBuilder como la forma de leer parámetros de línea de comandos; la conexión a EAServer mediante JaguarORB permite a un cliente PB invocar componentes remotos; y los eventos *Open* de ventana se ejecutan tras abrir la ventana antes de mostrarla. Los mensajes al usuario se muestran usando `MessageBox()`.
