@@ -8,33 +8,28 @@ Este documento detalla el proceso de validación de parámetros y verificación 
 
 ```mermaid
 flowchart TD
-    Start["Inicio de Validación de parámetros y existencia en Siebel"] --> ParseParams["Extraer campos desde cadena CommandLine"]
+    Start["Inicio de Validación de parámetros y existencia en Siebel"]
+    Start --> ParseParams["Extraer campos desde cadena CommandLine"]
     ParseParams --> CheckCount{"¿Número de parámetros correcto?"}
-    CheckCount -- No --> ErrorCount["Error: Número de parámetros insuficiente"]
+    CheckCount -- No --> ErrorCount["Mostrar error: Número de parámetros insuficiente"]
     ErrorCount --> EndErr1["Fin con error"]
 
-    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud"]
+    CheckCount -- Sí --> ValidateSyntax["Validar sintaxis: NIF, código, longitud, etc."]
     ValidateSyntax --> CheckFields{"¿Campos requeridos presentes?"}
-    CheckFields -- No --> ErrorFields["Error: Campo obligatorio vacío"]
+    CheckFields -- No --> ErrorFields["Mostrar error: Campo obligatorio vacío"]
     ErrorFields --> EndErr2["Fin con error"]
 
-    CheckFields -- Sí --> CheckSiebel["Consultar existencia en CRM Siebel"]
+    CheckFields -- Sí --> CheckSiebel["Consultar existencia previa en CRM Siebel"]
     CheckSiebel --> IsAlta{"¿Operación es Alta?"}
     IsAlta -- Sí --> ExistsAlta{"¿Ya existe en Siebel?"}
-    ExistsAlta -- Sí --> ErrorAlta["Error: Ya existe en Siebel"]
+    ExistsAlta -- Sí --> ErrorAlta["Mostrar error: Ya existe en Siebel"]
     ErrorAlta --> EndErr3["Fin con error"]
-    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta)"]
+    ExistsAlta -- No --> EndOk1["Fin: Validación exitosa (Alta permitida)"]
 
     IsAlta -- No --> ExistsMod{"¿No existe en Siebel?"}
-    ExistsMod -- Sí --> ErrorMod["Error: No existe en Siebel para modificar"]
+    ExistsMod -- Sí --> ErrorMod["Mostrar error: No existe en Siebel para modificar"]
     ErrorMod --> EndErr4["Fin con error"]
-    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación)"]
-
-    %% Estilo de cajas
-    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef validation fill:#bbf,stroke:#333,stroke-width:2px;
-    class Start,EndErr1,EndErr2,EndErr3,EndErr4,EndOk1,EndOk2 default;
-    class ParseParams,CheckCount,ValidateSyntax,CheckFields,CheckSiebel,IsAlta,ExistsAlta,ExistsMod validation;
+    ExistsMod -- No --> EndOk2["Fin: Validación exitosa (Modificación permitida)"]
 ```
 
 **Nota:** El flujo de validación se ejecuta secuencialmente, verificando cada aspecto antes de proceder con la operación principal. Si alguna validación falla, se muestra un mensaje de error y se interrumpe el proceso.
