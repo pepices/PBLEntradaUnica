@@ -48,6 +48,8 @@ Se construye una estructura tipo registro/log:
 - La aplicación puede auditar eventos por usuario, tipo, y resultado.
 
 
+
+
 ```mermaid
 flowchart TD
     Start["Inicio de Registro en Histórico"]
